@@ -1,0 +1,62 @@
+#SpinnerCirclerIesp{
+    border-radius: 100%;
+    height:300px;
+    width:300px;
+    background-color: red;
+    color: green;
+    margin-top: 20vh;
+    
+}
+#FooterIESP{
+ height:10vh;
+}
+#MAinSpinnerRow{
+ height:10vh;
+}
+#SpinnerRowMAin{
+ height:80vh;
+}
+#leftColmainrow,#lastColmainrow{
+  background-color: aqua;
+}
+#TeamARightRowtop,#TeamARightRowboottom{
+  height:30%;
+  background-color: bisque;
+}
+#TeamARghtBoxImage{
+  height:40%;
+  background-color: bisque;
+}
+#TeamARghtBoxImage img {
+height: 100%;
+width: auto; 
+object-fit: cover; 
+border-radius: 50px;
+}
+/*
+
+
+*/
+
+#TeamAlastRowtop,#TeamAlastRowboottom{
+  height:30%;
+  background-color: bisque;
+}
+#TeamAlastImage{
+  height:40%;
+  background-color: bisque;
+}
+#TeamAlastImage img {
+height: 100%;
+width: auto; 
+object-fit: cover; 
+border-radius: 50px;
+}
+#Round1Name,#Round1Button{
+height:20%;
+background-color: rgb(185, 105, 7);
+}
+#Round1MiddleRow{
+height:60%;
+background-color: rgb(78, 149, 207);
+}
