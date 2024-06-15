@@ -1,100 +1,107 @@
 let img1 = document.querySelector("#TeamAMemberImage");
 let img2 = document.querySelector("#TeamBMemberImage");
-let TeamAName = document.querySelector("#TEamAMEmberNAme");
-let TeamBName = document.querySelector("#TEamBMEmberNAme");
+let TeamAName = document.querySelector("#TeamAMemberName");
+let TeamBName = document.querySelector("#TeamBMemberName");
 let SelectedParticipantA = document.querySelector("#SelectedParticipantA");
 let SelectedParticipantB = document.querySelector("#SelectedParticipantB");
 
-let cimg = document.querySelector("#s3");
-let span = document.querySelector("#sp");
-let span2 = document.querySelector("#sp3");
-let l1 = document.querySelector("#l1");
+let intervalId;
+let arraynameA = ['Shiv', 'Aryan', 'Priti', 'Smile', 'Cherry', 'Karthik'];
+let ImageArrayA = ['a1', 'a2', 'a3', 'a4', 'a5', 'a6'];
+let ImageArrayB = ['b1', 'b2', 'b3', 'b4', 'b5', 'b6'];
+let arraynameB = ['Shivani', 'Aryanshi', 'Preetam', 'Naswi', 'Shivansh', 'Manish'];
+let randomnumberA = [0, 1, 2, 3, 4, 5];
+let randomnumberB = [0, 1, 2, 3, 4, 5];
+let SelectedArrayA = [];
+let SelectedArrayB = [];
+let An1;
+let Bn1;
 
-    let intervalId;
-    arraynameA = ['Shiv','Aryan','Priti','Smile','Cherry','Karthik']
-    ImageArrayA= ['a1','a2','a3','a4','a5','a6']
-    ImageArrayB= ['b1','b2','b3','b4','b5','b6']
-    arraynameB = ['Shivani','Aryanshi','Preetam','naswi','tomato','manish']
-    randomnumberA = [1,2,3,4,5,6]
-    randomnumberB = [1,2,3,4,5,6]
-    SelectedArrayA = []
-    SelectedArrayB = []
-    var An1;
-    var Bn1;
-    var SelectedALength = SelectedArrayA.length;
-    var SelectedBLength = SelectedArrayB.length;
-function ChangePArticipant(){
-    
-for(i=0;i<arraynameA.length;i++){
-
-
-    let n1 = Math.floor(Math.random()*randomnumberA.length)+1;
-    let n2 = Math.floor(Math.random()*randomnumberB.length)+1;
-    
-    
-   
-    //  var flag =1;
-    //  for(i=0;i<SelectedALength;i++){
-    //     if(SelectedArrayA[i]===n1){
-    //       flag=2;
-    //     }
-    //  };
-    //  for(i=0;i<SelectedBLength;i++){
-    //     if(SelectedArrayB[i]===n1)
-    //         {
-    //             flag=3;  
-    //         }
-    //  }
-
-    //  if(flag==1){
-    An1 = n1-1;
-    Bn1 = n2-1;
-     A =  ImageArrayA[An1] + ".jpg";
-     B = ImageArrayB[Bn1] + ".jpg";
-    img2.src = A;
-    img1.src = B;
+function ChangeParticipant() {
+    let n1 = Math.floor(Math.random() * randomnumberA.length);
+    let n2 = Math.floor(Math.random() * randomnumberB.length);
+    An1 = randomnumberA[n1];
+    Bn1 = randomnumberB[n2];
+    let A = `images/${ImageArrayA[An1]}.jpg`;
+    let B = `images/${ImageArrayB[Bn1]}.jpg`;
+    img1.src = A;
+    img2.src = B;
     TeamAName.innerText = arraynameA[An1];
     TeamBName.innerText = arraynameB[Bn1];
-    //  }
-    //  else{
-    //     continue;
-    //  }
 }
-}
-
-
-
-for(i=0;i<SelectedALength;i++){
- console.log('Team A List'+SelectedArrayA[i]);
- console.log('Team B List'+SelectedArrayB[i]);
-
- };
-
 
 function startChangeParticipant() {
-    intervalId = setInterval(ChangePArticipant, 200);
+    intervalId = setInterval(ChangeParticipant, 200);
+    document.getElementById('Choose').removeAttribute('disabled');
+    document.getElementById('StartImageRunning').setAttribute('disabled', 'disabled');
 }
 
+//=========================================================================================================
+let canRunStopFunction = true; // Flag to control the execution of the stopChangeParticipant function
+const delayBetweenStops =  60 * 1000;
+
 function stopChangeParticipant() {
-
-    
+    if (canRunStopFunction) {
     clearInterval(intervalId);
-    SelectedArrayA.push(An1);
-    SelectedArrayB.push(Bn1);
-
-    SelectedParticipantA.innerText = arraynameA[An1];
+    if(arraynameA[An1] !== undefined && arraynameA[An1] !==null){
+        SelectedArrayA.push(An1);
+        SelectedParticipantA.innerText = arraynameA[An1];
+        arraynameA.splice(An1, 1);
+        ImageArrayA.splice(An1, 1);
+        randomnumberA.splice(An1, 1);
+    }
+    if(arraynameB[Bn1] !== undefined && arraynameB[Bn1] !==null){
+    SelectedArrayB.push(Bn1);    
     SelectedParticipantB.innerText = arraynameB[Bn1];
-    arraynameA.splice(An1, 1);
-    ImageArrayA.splice(An1, 1);
-    randomnumberA.splice(An1, 1);
     arraynameB.splice(Bn1, 1);
     ImageArrayB.splice(Bn1, 1);
     randomnumberB.splice(Bn1, 1);
-    console.log('Eleement of the updated list')
-    var SelectedALength = SelectedArrayA.length;
-    var SelectedBLength = SelectedArrayB.length;
-    for(i=0;i<SelectedALength;i++){
-        console.log(arraynameA[i]);
-     };
+    }
+    canRunStopFunction = false;
+    setTimeout(() => {
+    document.getElementById('StartImageRunning').removeAttribute('disabled');
+    document.getElementById('Choose').setAttribute('disabled', 'disabled');
+        canRunStopFunction = true;
+    }, delayBetweenStops);
 }
+else{
+}
+}
+
+let countdownInterval; // Declare countdownInterval outside the event listeners to make it accessible
+
+const round1ButtonTimer = document.getElementById('round1ButtonTimer');
+round1ButtonTimer.addEventListener('click', function(){
+    document.getElementById('digitalClock').innerText = '';
+    document.getElementById('digitalClock').style.display = 'block';
+    document.getElementById('Closedigitalclock').style.display = 'block';
+    document.getElementById('round1ButtonTimer').style.display = 'none';
+    let seconds = 5; // Adjust the time as needed for the second round
+    countdownInterval = setInterval(() => { // Assign countdownInterval here
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+        const formattedSeconds = remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+        document.getElementById('digitalClock').innerText = `${formattedMinutes}:${formattedSeconds}`;
+        seconds--;
+        if (seconds < 0) {
+            clearInterval(countdownInterval); // Stop the countdown when it reaches 0
+            document.getElementById('digitalClock').style.display = 'none';
+            
+    document.getElementById('Closedigitalclock').style.display = 'none';
+    document.getElementById('round1ButtonTimer').style.display = 'block';
+            
+        }
+    }, 1000);
+});
+
+const closeDigitalClockButton = document.getElementById('Closedigitalclock');
+
+closeDigitalClockButton.addEventListener('click', function() {
+    clearInterval(countdownInterval); // Clear the interval to stop the countdown timer
+    document.getElementById('digitalClock').style.display = 'none'; // Hide the digital clock
+    document.getElementById('Closedigitalclock').style.display = 'none';
+    document.getElementById('round1ButtonTimer').style.display = 'block';
+});
+
 
